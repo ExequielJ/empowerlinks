@@ -21,7 +21,7 @@ const featuredJobs = [
     posted: '2 days ago',
     logo: 'https://i.pravatar.cc/150?img=50',
     tags: ['Product', 'Leadership', 'Agile', 'B2B'],
-    description: 'Leading tech company seeking an experienced product manager to lead our flagship product. You'll work with cross-functional teams to define, build, and launch innovative solutions.'
+    description: 'Leading tech company seeking an experienced product manager to lead our flagship product. You\'ll work with cross-functional teams to define, build, and launch innovative solutions.'
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const featuredJobs = [
     posted: '1 week ago',
     logo: 'https://i.pravatar.cc/150?img=51',
     tags: ['UX Design', 'UI Design', 'Figma', 'User Research'],
-    description: 'Join our creative team to design intuitive and engaging user experiences for our digital products. You'll collaborate closely with product and engineering to bring designs to life.'
+    description: 'Join our creative team to design intuitive and engaging user experiences for our digital products. You\'ll collaborate closely with product and engineering to bring designs to life.'
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const featuredJobs = [
     posted: '3 days ago',
     logo: 'https://i.pravatar.cc/150?img=52',
     tags: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-    description: 'Seeking an experienced full stack developer to help build and maintain our SaaS platform. You'll work on challenging problems and have a direct impact on our product.'
+    description: 'Seeking an experienced full stack developer to help build and maintain our SaaS platform. You\'ll work on challenging problems and have a direct impact on our product.'
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ const featuredJobs = [
     posted: '5 days ago',
     logo: 'https://i.pravatar.cc/150?img=53',
     tags: ['Marketing Strategy', 'Team Leadership', 'Growth', 'B2C'],
-    description: 'Lead our marketing team to drive growth and engagement for our consumer products. You'll develop and execute comprehensive marketing strategies across channels.'
+    description: 'Lead our marketing team to drive growth and engagement for our consumer products. You\'ll develop and execute comprehensive marketing strategies across channels.'
   },
   {
     id: 5,
@@ -69,7 +69,7 @@ const featuredJobs = [
     posted: '1 day ago',
     logo: 'https://i.pravatar.cc/150?img=54',
     tags: ['Python', 'Machine Learning', 'SQL', 'Data Visualization'],
-    description: 'Join our data team to extract insights from complex datasets and build predictive models. You'll work with stakeholders to drive data-informed business decisions.'
+    description: 'Join our data team to extract insights from complex datasets and build predictive models. You\'ll work with stakeholders to drive data-informed business decisions.'
   }
 ];
 
