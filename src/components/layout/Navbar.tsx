@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import CustomButton from '@/components/ui/CustomButton';
 import { 
-  Menu, X, Search, Bell, MessageSquare, User, Briefcase, Calendar, BookOpen, Users
+  Menu, X, Search, Bell, MessageSquare, User, Briefcase, Calendar, BookOpen, Users, LogIn
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock authentication state
   const location = useLocation();
 
   const navLinks = [
@@ -52,7 +54,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-purple to-brand-pink">
-                EmpowerLinks
+                SheTrades Network
               </span>
             </Link>
           </div>
@@ -75,26 +77,39 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Action Icons */}
+          {/* Action Icons or Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <MessageSquare className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
-            </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full h-9 w-9 overflow-hidden">
-              <img 
-                src="https://i.pravatar.cc/150?img=5" 
-                alt="Profile" 
-                className="h-full w-full object-cover"
-              />
-            </Button>
+            {isLoggedIn ? (
+              <>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Search className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="icon" className="relative">
+                  <MessageSquare className="h-5 w-5" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+                </Button>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+                </Button>
+                <Button variant="ghost" size="icon" className="rounded-full h-9 w-9 overflow-hidden">
+                  <img 
+                    src="https://i.pravatar.cc/150?img=5" 
+                    alt="Profile" 
+                    className="h-full w-full object-cover"
+                  />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="outline" size="sm">Sign In</Button>
+                </Link>
+                <Link to="/auth?tab=signup">
+                  <CustomButton size="sm" gradient>Join Now</CustomButton>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -141,12 +156,17 @@ const Navbar = () => {
           </nav>
 
           <div className="mt-6 flex items-center justify-between">
-            <Button variant="outline" size="sm" className="w-1/2 mr-2">
-              Sign In
-            </Button>
-            <Button size="sm" className="w-1/2">
-              Join Now
-            </Button>
+            <Link to="/auth" className="w-1/2 mr-2">
+              <Button variant="outline" size="sm" className="w-full">
+                <LogIn className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/auth?tab=signup" className="w-1/2">
+              <CustomButton size="sm" className="w-full" gradient>
+                Join Now
+              </CustomButton>
+            </Link>
           </div>
         </div>
       </div>
