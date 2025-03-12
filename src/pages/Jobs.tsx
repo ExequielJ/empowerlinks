@@ -70,7 +70,7 @@ const featuredJobs = [
     logo: 'https://i.pravatar.cc/150?img=54',
     tags: ['Python', 'Machine Learning', 'SQL', 'Data Visualization'],
     description: 'Join our data team to extract insights from complex datasets and build predictive models. You'll work with stakeholders to drive data-informed business decisions.'
-  },
+  }
 ];
 
 const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Remote'];
