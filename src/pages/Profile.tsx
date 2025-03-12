@@ -1,8 +1,7 @@
-
 import React, { useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, FileText, Award, Briefcase, Users, BookOpen } from 'lucide-react';
+import { Calendar, FileText, Award, Briefcase, Users, BookOpen, Star } from 'lucide-react';
 import ProfileCard from '../components/profile/ProfileCard';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
