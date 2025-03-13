@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -6,12 +5,14 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { Search, MessageSquare, Users, UserPlus, Filter, Star } from 'lucide-react';
+import { Search, MessageSquare, Users, UserPlus, Filter, Star, X } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import CustomButton from '@/components/ui/CustomButton';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
-// Mock networking data
 const connections = [
   { id: 1, name: 'Sarah Johnson', role: 'Product Manager at TechCorp', avatar: 'https://i.pravatar.cc/150?img=1', mutualConnections: 12 },
   { id: 2, name: 'Emily Chen', role: 'Software Engineer at InnovateSoft', avatar: 'https://i.pravatar.cc/150?img=5', mutualConnections: 8 },
@@ -58,6 +59,77 @@ const mentors = [
 
 const Networking = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showMentorshipForm, setShowMentorshipForm] = useState(false);
+  const [selectedMentor, setSelectedMentor] = useState<typeof mentors[0] | null>(null);
+  const [mentorshipGoals, setMentorshipGoals] = useState('');
+  const [mentorshipExperience, setMentorshipExperience] = useState('');
+  const [mentorshipAvailability, setMentorshipAvailability] = useState('');
+  
+  const [showFindMentorForm, setShowFindMentorForm] = useState(false);
+  const [showBecomeMentorForm, setShowBecomeMentorForm] = useState(false);
+  
+  const [newConversation, setNewConversation] = useState(false);
+  const [recipientUsername, setRecipientUsername] = useState('');
+  
+  const [selectedConnection, setSelectedConnection] = useState<typeof connections[0] | null>(null);
+  const [showMessagePreview, setShowMessagePreview] = useState(false);
+  const [showProfilePreview, setShowProfilePreview] = useState(false);
+  const [messageText, setMessageText] = useState('');
+
+  const handleRequestMentorship = (mentor: typeof mentors[0]) => {
+    setSelectedMentor(mentor);
+    setShowMentorshipForm(true);
+  };
+
+  const handleSubmitMentorshipRequest = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Mentorship request submitted to ${selectedMentor?.name}!`);
+    setShowMentorshipForm(false);
+    setMentorshipGoals('');
+    setMentorshipExperience('');
+    setMentorshipAvailability('');
+    setSelectedMentor(null);
+  };
+
+  const handleFindMentor = () => {
+    setShowFindMentorForm(true);
+    setShowBecomeMentorForm(false);
+  };
+
+  const handleBecomeMentor = () => {
+    setShowBecomeMentorForm(true);
+    setShowFindMentorForm(false);
+  };
+
+  const handleStartConversation = () => {
+    setNewConversation(true);
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Message sent to ${recipientUsername}!`);
+    setNewConversation(false);
+    setRecipientUsername('');
+  };
+
+  const handleMessageConnection = (connection: typeof connections[0]) => {
+    setSelectedConnection(connection);
+    setShowMessagePreview(true);
+    setShowProfilePreview(false);
+  };
+
+  const handleViewProfile = (connection: typeof connections[0]) => {
+    setSelectedConnection(connection);
+    setShowProfilePreview(true);
+    setShowMessagePreview(false);
+  };
+
+  const handleSendConnectionMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Message sent to ${selectedConnection?.name}!`);
+    setShowMessagePreview(false);
+    setMessageText('');
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -123,11 +195,21 @@ const Networking = () => {
                               <p className="text-sm text-muted-foreground">{connection.role}</p>
                               <p className="text-xs mt-1">{connection.mutualConnections} mutual connections</p>
                               <div className="flex space-x-2 mt-2">
-                                <Button variant="outline" size="sm">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => handleMessageConnection(connection)}
+                                >
                                   <MessageSquare className="h-3 w-3 mr-1" />
                                   Message
                                 </Button>
-                                <Button variant="ghost" size="sm">View Profile</Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => handleViewProfile(connection)}
+                                >
+                                  View Profile
+                                </Button>
                               </div>
                             </div>
                           </CardContent>
@@ -207,11 +289,81 @@ const Networking = () => {
                     <h2 className="text-2xl font-bold mb-2">Mentorship Program</h2>
                     <p className="mb-4">Connect with experienced professionals for guidance, advice, and career development</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                      <Button>Find a Mentor</Button>
-                      <Button variant="outline">Become a Mentor</Button>
+                      <Button onClick={handleFindMentor}>Find a Mentor</Button>
+                      <Button variant="outline" onClick={handleBecomeMentor}>Become a Mentor</Button>
                     </div>
                   </div>
                 </div>
+
+                {showFindMentorForm && (
+                  <Card className="mb-6">
+                    <CardHeader>
+                      <div className="flex justify-between items-center">
+                        <CardTitle>Find a Mentor</CardTitle>
+                        <Button size="icon" variant="ghost" onClick={() => setShowFindMentorForm(false)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <CardDescription>Tell us what you're looking for in a mentor</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <form className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="expertise">Expertise Areas</Label>
+                          <Input id="expertise" placeholder="e.g., Leadership, Career Transition, Technical Skills" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="industry">Industry</Label>
+                          <Input id="industry" placeholder="e.g., Tech, Healthcare, Finance" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="goals">Mentorship Goals</Label>
+                          <Textarea id="goals" placeholder="What do you hope to achieve with a mentor?" />
+                        </div>
+                        <div className="flex justify-end">
+                          <Button>Search Mentors</Button>
+                        </div>
+                      </form>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {showBecomeMentorForm && (
+                  <Card className="mb-6">
+                    <CardHeader>
+                      <div className="flex justify-between items-center">
+                        <CardTitle>Become a Mentor</CardTitle>
+                        <Button size="icon" variant="ghost" onClick={() => setShowBecomeMentorForm(false)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <CardDescription>Share your experience and help others grow</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <form className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="mentor-expertise">Your Areas of Expertise</Label>
+                          <Input id="mentor-expertise" placeholder="e.g., Leadership, Technical Skills, Career Development" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="mentor-experience">Years of Experience</Label>
+                          <Input id="mentor-experience" type="number" placeholder="e.g., 5" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="mentor-time">Time Commitment</Label>
+                          <Input id="mentor-time" placeholder="e.g., 2 hours per week" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="mentor-bio">Short Bio</Label>
+                          <Textarea id="mentor-bio" placeholder="Tell potential mentees about your background and what you can offer" />
+                        </div>
+                        <div className="flex justify-end">
+                          <Button>Submit Application</Button>
+                        </div>
+                      </form>
+                    </CardContent>
+                  </Card>
+                )}
 
                 <h3 className="text-xl font-semibold mb-4">Featured Mentors</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -246,26 +398,217 @@ const Networking = () => {
                         </div>
                       </CardContent>
                       <CardFooter>
-                        <Button className="w-full">Request Mentorship</Button>
+                        <Button 
+                          className="w-full"
+                          onClick={() => handleRequestMentorship(mentor)}
+                        >
+                          Request Mentorship
+                        </Button>
                       </CardFooter>
                     </Card>
                   ))}
                 </div>
+
+                {showMentorshipForm && selectedMentor && (
+                  <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+                    <Card className="w-full max-w-md">
+                      <CardHeader>
+                        <div className="flex justify-between items-center">
+                          <CardTitle>Request Mentorship</CardTitle>
+                          <Button size="icon" variant="ghost" onClick={() => setShowMentorshipForm(false)}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <CardDescription>
+                          Requesting mentorship from {selectedMentor.name}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <form onSubmit={handleSubmitMentorshipRequest} className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="goals">What are your mentorship goals?</Label>
+                            <Textarea 
+                              id="goals" 
+                              placeholder="What do you hope to achieve with this mentorship?"
+                              value={mentorshipGoals}
+                              onChange={(e) => setMentorshipGoals(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="experience">Your current experience level</Label>
+                            <Textarea 
+                              id="experience" 
+                              placeholder="Briefly describe your background and experience"
+                              value={mentorshipExperience}
+                              onChange={(e) => setMentorshipExperience(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="availability">Your availability for mentorship sessions</Label>
+                            <Input 
+                              id="availability" 
+                              placeholder="e.g., Weekday evenings, Tuesday afternoons"
+                              value={mentorshipAvailability}
+                              onChange={(e) => setMentorshipAvailability(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="pt-2 flex justify-end gap-2">
+                            <Button type="button" variant="outline" onClick={() => setShowMentorshipForm(false)}>
+                              Cancel
+                            </Button>
+                            <Button type="submit">
+                              Submit Request
+                            </Button>
+                          </div>
+                        </form>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="messages" className="mt-6">
-                <div className="bg-muted/50 rounded-lg p-8 text-center">
-                  <MessageSquare className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-xl font-semibold mb-2">Your Messages</h3>
-                  <p className="text-muted-foreground mb-4">Connect and chat with your professional network</p>
-                  <Button>Start a Conversation</Button>
-                </div>
+                {!newConversation ? (
+                  <div className="bg-muted/50 rounded-lg p-8 text-center">
+                    <MessageSquare className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                    <h3 className="text-xl font-semibold mb-2">Your Messages</h3>
+                    <p className="text-muted-foreground mb-4">Connect and chat with your professional network</p>
+                    <Button onClick={handleStartConversation}>Start a Conversation</Button>
+                  </div>
+                ) : (
+                  <Card>
+                    <CardHeader>
+                      <div className="flex justify-between items-center">
+                        <CardTitle>New Conversation</CardTitle>
+                        <Button size="icon" variant="ghost" onClick={() => setNewConversation(false)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <form onSubmit={handleSendMessage} className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="recipient">Recipient</Label>
+                          <Input 
+                            id="recipient" 
+                            placeholder="Enter username" 
+                            value={recipientUsername}
+                            onChange={(e) => setRecipientUsername(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="message">Message</Label>
+                          <Textarea 
+                            id="message" 
+                            placeholder="Type your message here"
+                            required
+                          />
+                        </div>
+                        <div className="pt-2 flex justify-end gap-2">
+                          <Button type="button" variant="outline" onClick={() => setNewConversation(false)}>
+                            Cancel
+                          </Button>
+                          <Button type="submit">
+                            Send Message
+                          </Button>
+                        </div>
+                      </form>
+                    </CardContent>
+                  </Card>
+                )}
               </TabsContent>
             </Tabs>
           </div>
         </div>
       </main>
       <Footer />
+
+      {showMessagePreview && selectedConnection && (
+        <div className="fixed bottom-4 right-4 z-50 w-80">
+          <Card className="shadow-lg">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={selectedConnection.avatar} alt={selectedConnection.name} />
+                    <AvatarFallback>{selectedConnection.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <CardTitle className="text-sm">{selectedConnection.name}</CardTitle>
+                    <CardDescription className="text-xs">{selectedConnection.role}</CardDescription>
+                  </div>
+                </div>
+                <Button size="icon" variant="ghost" onClick={() => setShowMessagePreview(false)}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="pb-3">
+              <form onSubmit={handleSendConnectionMessage} className="space-y-3">
+                <Textarea 
+                  placeholder={`Message ${selectedConnection.name}...`}
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  className="min-h-24"
+                  required
+                />
+                <div className="flex justify-end">
+                  <Button type="submit" size="sm">
+                    Send
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {showProfilePreview && selectedConnection && (
+        <div className="fixed bottom-4 right-4 z-50 w-80">
+          <Card className="shadow-lg">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-sm">Profile Preview</CardTitle>
+                <Button size="icon" variant="ghost" onClick={() => setShowProfilePreview(false)}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="text-center pb-6">
+              <div className="mb-4">
+                <Avatar className="h-16 w-16 mx-auto">
+                  <AvatarImage src={selectedConnection.avatar} alt={selectedConnection.name} />
+                  <AvatarFallback>{selectedConnection.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
+                <h3 className="font-medium mt-2">{selectedConnection.name}</h3>
+                <p className="text-sm text-muted-foreground">{selectedConnection.role}</p>
+              </div>
+              <div className="text-xs text-left space-y-2">
+                <p><span className="font-medium">Mutual Connections:</span> {selectedConnection.mutualConnections}</p>
+                <p><span className="font-medium">Location:</span> San Francisco, CA</p>
+                <p><span className="font-medium">Experience:</span> 5+ years</p>
+              </div>
+              <div className="mt-4 flex gap-2 justify-center">
+                <Button size="sm" variant="outline">View Full Profile</Button>
+                <Button 
+                  size="sm"
+                  onClick={() => {
+                    setShowProfilePreview(false);
+                    setShowMessagePreview(true);
+                  }}
+                >
+                  <MessageSquare className="h-3 w-3 mr-1" />
+                  Message
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
