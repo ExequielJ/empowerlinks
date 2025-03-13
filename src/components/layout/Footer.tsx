@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -13,7 +12,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-purple to-brand-pink">
-                EmpowerLinks
+                SheTradesNetwork
               </span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -155,7 +154,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border">
           <p className="text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} EmpowerLinks. All rights reserved. Made with{' '}
+            &copy; {new Date().getFullYear()} SheTradesNetwork.com. All rights reserved. Made with{' '}
             <Heart className="h-4 w-4 inline-block text-red-500" /> for women professionals.
           </p>
         </div>

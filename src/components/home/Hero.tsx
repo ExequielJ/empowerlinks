@@ -24,7 +24,7 @@ const Hero = () => {
                 Connect, <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-purple to-brand-pink">Empower</span>, and Grow Together
               </h1>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
-                Join thousands of women professionals in a safe, inclusive space designed to help you expand your network, discover opportunities, and advance your career.
+                Join SheTradesNetwork.com - thousands of women professionals in a safe, inclusive space designed to help you expand your network, discover opportunities, and advance your career.
               </p>
               
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
