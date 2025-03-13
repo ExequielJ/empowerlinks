@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Image, FileText, BarChart, Calendar, MapPin, Smile } from 'lucide-react';
-import { Post } from '../../types/feed';
+import { Post, PostType } from '../../types/feed';
 
 type PostCreatorProps = {
   onAddPost: (post: Post) => void;
@@ -39,7 +39,8 @@ const PostCreator = ({ onAddPost, groupContext }: PostCreatorProps) => {
         shares: 0,
         hashtags: groupContext ? [`#${groupContext.toLowerCase().replace(/\s+/g, '')}`, '#shetrades'] : ['#shetrades'],
         isFeatured: false,
-        type: 'post',
+        type: 'text' as PostType,
+        visibility: 'public',
       };
       
       onAddPost(newPost);
