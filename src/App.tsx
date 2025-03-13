@@ -13,6 +13,7 @@ import Events from "./pages/Events";
 import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import Feed from "./pages/Feed";
+import GroupFeed from "./pages/GroupFeed";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/networking" element={<Networking />} />
+          <Route path="/groups/:groupId" element={<GroupFeed />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/events" element={<Events />} />
           <Route path="/resources" element={<Resources />} />

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,9 +27,27 @@ const recommendations = [
 ];
 
 const groups = [
-  { id: 1, name: 'Women in Tech Leadership', members: 2845, activity: 'high', image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' },
-  { id: 2, name: 'Female Founders Hub', members: 1532, activity: 'medium', image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' },
-  { id: 3, name: 'Women in Data Science', members: 3217, activity: 'high', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' },
+  { 
+    id: "women-in-tech-leadership", 
+    name: 'Women in Tech Leadership', 
+    members: 2845, 
+    activity: 'high', 
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' 
+  },
+  { 
+    id: "female-founders-hub", 
+    name: 'Female Founders Hub', 
+    members: 1532, 
+    activity: 'medium', 
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' 
+  },
+  { 
+    id: "women-in-data-science", 
+    name: 'Women in Data Science', 
+    members: 3217, 
+    activity: 'high', 
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3' 
+  },
 ];
 
 const mentors = [
@@ -169,7 +188,9 @@ const Networking = () => {
                         <CardDescription>{group.members} members • {group.activity} activity</CardDescription>
                       </CardHeader>
                       <CardFooter>
-                        <Button variant="outline" className="w-full">Join Group</Button>
+                        <Link to={`/groups/${group.id}`} className="w-full">
+                          <Button variant="outline" className="w-full">Join Group</Button>
+                        </Link>
                       </CardFooter>
                     </Card>
                   ))}
