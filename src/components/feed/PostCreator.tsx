@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -32,7 +31,6 @@ const PostCreator = ({ onAddPost, groupContext }: PostCreatorProps) => {
           avatar: "https://i.pravatar.cc/150?img=5",
         },
         content: content,
-        images: [],
         timestamp: "Just now",
         likes: 0,
         comments: [],

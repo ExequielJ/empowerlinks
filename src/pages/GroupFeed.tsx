@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -40,6 +39,210 @@ const groupData = {
   }
 };
 
+// Mock group-specific posts
+const groupSpecificPosts: Record<string, Post[]> = {
+  "women-in-tech-leadership": [
+    {
+      id: "wtech1",
+      author: {
+        id: "user7",
+        name: "Dr. Maya Chen",
+        role: "CTO",
+        company: "HealthTech Innovations",
+        avatar: "https://i.pravatar.cc/150?img=44",
+        isVerified: true,
+      },
+      content: "Just finished our Women in Tech Leadership quarterly meetup! So inspired by all the incredible women pushing boundaries in tech. Special thanks to our guest speaker Sarah Johnson for her insights on leading remote engineering teams.",
+      type: "text" as PostType,
+      timestamp: "2 days ago",
+      likes: 78,
+      comments: [
+        {
+          id: "wc1",
+          author: {
+            id: "user12",
+            name: "Emily Rodriguez",
+            role: "VP of Engineering",
+            avatar: "https://i.pravatar.cc/150?img=23",
+          },
+          content: "It was such an informative session! Looking forward to implementing some of Sarah's strategies with my team.",
+          timestamp: "1 day ago",
+          likes: 8,
+        }
+      ],
+      shares: 12,
+      hashtags: ["WomenInTech", "Leadership", "TechCommunity", "WomeninTechLeadership"],
+      visibility: "public",
+    },
+    {
+      id: "wtech2",
+      author: {
+        id: "user23",
+        name: "Amina Patel",
+        role: "Engineering Director",
+        company: "CloudScale",
+        avatar: "https://i.pravatar.cc/150?img=25",
+      },
+      content: "Exciting news! Our mentorship program for women in technical leadership roles is now open for applications. We're pairing senior tech leaders with up-and-coming women in the field. Applications close June 30th.",
+      type: "event" as PostType,
+      timestamp: "3 days ago",
+      likes: 132,
+      comments: [],
+      shares: 45,
+      hashtags: ["Mentorship", "WomenInTech", "TechLeadership", "WomeninTechLeadership"],
+      visibility: "public",
+    }
+  ],
+  "female-founders-hub": [
+    {
+      id: "ffh1",
+      author: {
+        id: "user15",
+        name: "Leila Johnson",
+        role: "Founder & CEO",
+        company: "EcoStyle",
+        avatar: "https://i.pravatar.cc/150?img=32",
+        isVerified: true,
+      },
+      content: "Just closed our Series A funding round! $5M to scale our sustainable fashion tech platform. Grateful to our amazing team and investors who believe in our vision of making fashion more sustainable through technology.",
+      type: "text" as PostType,
+      timestamp: "6 hours ago",
+      likes: 215,
+      comments: [
+        {
+          id: "ffc1",
+          author: {
+            id: "user17",
+            name: "Sophia Wong",
+            role: "Angel Investor",
+            avatar: "https://i.pravatar.cc/150?img=16",
+          },
+          content: "Congratulations, Leila! Well-deserved success for an incredible product and team.",
+          timestamp: "5 hours ago",
+          likes: 12,
+        }
+      ],
+      shares: 87,
+      hashtags: ["StartupLife", "WomenFounders", "SustainableTech", "FemaleFounders", "FemaleFoundersHub"],
+      visibility: "public",
+      isFeatured: true,
+    },
+    {
+      id: "ffh2",
+      author: {
+        id: "user29",
+        name: "Female Founders Network",
+        role: "Organization",
+        avatar: "https://i.pravatar.cc/150?img=39",
+        isVerified: true,
+      },
+      content: "Join our monthly pitch practice session this Friday at 2PM EST. Get feedback on your pitch from experienced founders and investors. Virtual event, open to all members of this group.",
+      type: "event" as PostType,
+      timestamp: "1 day ago",
+      likes: 45,
+      comments: [],
+      shares: 23,
+      hashtags: ["PitchPractice", "StartupAdvice", "FemaleFounders", "FemaleFoundersHub"],
+      visibility: "public",
+    },
+    {
+      id: "ffh3",
+      author: {
+        id: "user31",
+        name: "Zara Williams",
+        role: "Founder",
+        company: "FinTech Solutions",
+        avatar: "https://i.pravatar.cc/150?img=27",
+      },
+      content: "What's your biggest challenge when raising funds as a female founder? I'm gathering insights for my upcoming workshop and would love to hear your experiences.",
+      type: "poll" as PostType,
+      timestamp: "2 days ago",
+      likes: 67,
+      comments: [
+        {
+          id: "ffc2",
+          author: {
+            id: "user42",
+            name: "Nina Patel",
+            role: "Co-founder",
+            company: "AI Health",
+            avatar: "https://i.pravatar.cc/150?img=29",
+          },
+          content: "Being taken seriously in healthcare tech is my biggest challenge. I've had VCs question my technical background despite having a PhD in computer science.",
+          timestamp: "1 day ago",
+          likes: 28,
+        }
+      ],
+      shares: 19,
+      poll: {
+        question: "Biggest fundraising challenge?",
+        options: [
+          { id: "ffp1", text: "Getting in the door/networking", votes: 86 },
+          { id: "ffp2", text: "Being taken seriously", votes: 103 },
+          { id: "ffp3", text: "Valuation discussions", votes: 65 },
+          { id: "ffp4", text: "Term sheet negotiations", votes: 42 }
+        ],
+        totalVotes: 296,
+        endDate: "2023-07-01T00:00:00Z"
+      },
+      hashtags: ["FundingAdvice", "FemaleFounders", "VentureCapital", "FemaleFoundersHub"],
+      visibility: "public",
+    }
+  ],
+  "women-in-data-science": [
+    {
+      id: "wds1",
+      author: {
+        id: "user55",
+        name: "Dr. Rebecca Lee",
+        role: "Data Science Lead",
+        company: "TechGiant",
+        avatar: "https://i.pravatar.cc/150?img=33",
+        isVerified: true,
+      },
+      content: "Just published my new research on ethical considerations in AI algorithms. Link to the paper in comments. Would love your thoughts and feedback!",
+      type: "text" as PostType,
+      timestamp: "4 hours ago",
+      likes: 92,
+      comments: [
+        {
+          id: "wdsc1",
+          author: {
+            id: "user55",
+            name: "Dr. Rebecca Lee",
+            role: "Data Science Lead",
+            avatar: "https://i.pravatar.cc/150?img=33",
+          },
+          content: "Here's the link to the paper: https://example.com/ethical-ai-research",
+          timestamp: "4 hours ago",
+          likes: 5,
+        }
+      ],
+      shares: 31,
+      hashtags: ["AIEthics", "DataScience", "Research", "WomenInDataScience"],
+      visibility: "public",
+    },
+    {
+      id: "wds2",
+      author: {
+        id: "user61",
+        name: "Data Science Conference",
+        role: "Organization",
+        avatar: "https://i.pravatar.cc/150?img=40",
+        isVerified: true,
+      },
+      content: "Call for speakers! We're looking for women in data science to present at our annual conference in September. Submit your proposal by July 15th.",
+      type: "event" as PostType,
+      timestamp: "2 days ago",
+      likes: 56,
+      comments: [],
+      shares: 42,
+      hashtags: ["DataScienceConference", "WomenSpeakers", "WomenInDataScience"],
+      visibility: "public",
+    }
+  ]
+};
+
 const GroupFeed = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -47,14 +250,23 @@ const GroupFeed = () => {
   const group = groupId ? groupData[groupId as keyof typeof groupData] : null;
 
   useEffect(() => {
-    // Filter mocked posts to show only those related to this group
-    // In a real app, we would fetch group-specific posts from an API
-    const filteredPosts = mockedPosts.filter(post => 
-      post.hashtags?.includes(`#${groupId}`) || 
-      post.content.toLowerCase().includes(group?.name.toLowerCase() || '')
+    // Get pre-populated posts for this group
+    const groupPosts = groupId && groupSpecificPosts[groupId] ? groupSpecificPosts[groupId] : [];
+    
+    // Add some general posts from the mocked data that might be relevant
+    const filteredGeneralPosts = mockedPosts.filter(post => 
+      post.hashtags?.some(tag => 
+        tag.toLowerCase().includes(groupId?.toLowerCase() || '') ||
+        post.content.toLowerCase().includes(group?.name.toLowerCase() || '')
+      )
     );
     
-    setPosts(filteredPosts);
+    // Combine group-specific posts with filtered general posts
+    const combinedPosts = [...groupPosts, ...filteredGeneralPosts];
+    
+    // Sort by timestamp (assuming newer posts should appear first)
+    // In a real app, we'd parse dates properly
+    setPosts(combinedPosts);
     window.scrollTo(0, 0);
   }, [groupId, group?.name]);
 
