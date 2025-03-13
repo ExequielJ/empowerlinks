@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -7,7 +8,7 @@ import PostList from '../components/feed/PostList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ArrowLeft, Users } from 'lucide-react';
-import { Post, PostComment } from '../types/feed';
+import { Post, PostComment, PostType } from '../types/feed';
 import { mockedPosts } from '../data/feed-data';
 import { useToast } from '@/hooks/use-toast';
 
