@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import CustomButton from '@/components/ui/CustomButton';
 import { 
-  Menu, X, Search, Bell, MessageSquare, User, Briefcase, Calendar, BookOpen, Users, LogIn
+  Menu, X, Search, Bell, MessageSquare, User, Briefcase, Calendar, BookOpen, Users, LogIn, Activity
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -16,6 +16,7 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home', icon: <User className="h-4 w-4 mr-2" /> },
+    { path: '/feed', label: 'Feed', icon: <Activity className="h-4 w-4 mr-2" /> },
     { path: '/profile', label: 'Profile', icon: <User className="h-4 w-4 mr-2" /> },
     { path: '/networking', label: 'Networking', icon: <Users className="h-4 w-4 mr-2" /> },
     { path: '/jobs', label: 'Jobs', icon: <Briefcase className="h-4 w-4 mr-2" /> },

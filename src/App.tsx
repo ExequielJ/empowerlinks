@@ -12,6 +12,7 @@ import Jobs from "./pages/Jobs";
 import Events from "./pages/Events";
 import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
+import Feed from "./pages/Feed";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/feed" element={<Feed />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
