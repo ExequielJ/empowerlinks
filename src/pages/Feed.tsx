@@ -8,7 +8,7 @@ import FeedSidebar from '../components/feed/FeedSidebar';
 import FeedFilters from '../components/feed/FeedFilters';
 import TrendingTopics from '../components/feed/TrendingTopics';
 import FeaturedAccounts from '../components/feed/FeaturedAccounts';
-import { Post } from '../types/feed';
+import { Post, PostComment } from '../types/feed';
 import { mockedPosts } from '../data/feed-data';
 import { useToast } from '@/hooks/use-toast';
 

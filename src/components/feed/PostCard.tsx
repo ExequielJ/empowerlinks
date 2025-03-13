@@ -19,7 +19,8 @@ import {
   ChevronUp,
   Check,
   ExternalLink,
-  Calendar
+  Calendar,
+  Briefcase
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { formatDistanceToNow } from 'date-fns';
